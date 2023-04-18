@@ -6,7 +6,7 @@ const postModel = require('../model/postModel')
 
 
 
-// ! get Post 
+// ! getALl Post 
 
 const getPost = asyncHandeler(async (req, res) => {
 
@@ -33,8 +33,16 @@ const getPost = asyncHandeler(async (req, res) => {
     }
 })
 
+//  !get single post
 
-
+const singlePost = asyncHandeler(async (req, res) => {
+    try {
+        const post = await postModel.findById(req.params.id);
+        res.status(200).json(post);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
 // ! Create Post
 
 const createPost = asyncHandeler(async (req, res) => {
@@ -91,5 +99,6 @@ module.exports = {
     getPost,
     createPost,
     editPost,
-    deletePost
+    deletePost,
+    singlePost
 }
