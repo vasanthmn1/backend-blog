@@ -82,7 +82,6 @@ const deletePost = asyncHandeler(async (req, res) => {
 
         if (!newPost) {
             res.status(404).json("Post not found")
-            return
         }
         if (newPost.username === req.body.username) {
             await newPost.deleteOne()
