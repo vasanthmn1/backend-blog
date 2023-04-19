@@ -7,8 +7,10 @@ const DB = require('./config/ConntingDB')
 const authRoute = require('./routes/auth')
 const { usererrHandel } = require('./middleware/errMiddleware')
 const userRoute = require('./routes/userRoutes')
-const PostRoute = require('./routes/PostRoutes')
+// const PostRoutes = require('./routes/PostRoutes')
 const categorie = require('./routes/categories')
+const postRoute = require('./routes/postRoutes')
+
 const path = require('path')
 
 const port = process.env.PORT
@@ -38,7 +40,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
 
 app.use('/auth', authRoute)
 app.use('/user', userRoute)
-app.use('/post', PostRoute)
+app.use('/post', postRoute)
 app.use('/categorie', categorie)
 
 
