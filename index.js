@@ -21,9 +21,9 @@ app.use(express.json())
 app.use(cors())
 app.use(cors(
     {
-        origin: "https://master--spontaneous-mooncake-060ef3.netlify.app",
-        methods: ["GET", "POST", "PUT", "DELETE"],
-        credentials: true,
+        origin: "*",
+        // methods: ["GET", "POST", "PUT", "DELETE"],
+        // credentials: true,
     }
 ))
 
