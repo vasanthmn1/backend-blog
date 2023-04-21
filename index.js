@@ -26,7 +26,7 @@ app.use(cors(
         credentials: true,
     }
 ))
-// app.use(cors(a))
+
 
 app.use(express.urlencoded({ extended: true }))
 app.use(usererrHandel)
