@@ -12,21 +12,33 @@ const getPost = asyncHandeler(async (req, res) => {
 
     const username = req.query.user
     const catName = req.query.cat
+    const search = req.query.search
+
 
     try {
         let posts;
         if (username) {
             posts = await postModel.find({ username })
-        } else if (catName) {
+        }
+        else if (catName) {
             posts = await postModel.find({
                 categories: {
                     $in: [catName],
                 }
             })
-        } else {
+        }
+        else if (search) {
+            posts = await postModel.find({ title: search })
+        }
+
+        else {
             posts = await postModel.find()
         }
         res.status(200).json(posts)
+
+
+
+
     } catch (error) {
         res.status(400)
         throw new Error(error)
