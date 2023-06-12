@@ -18,11 +18,12 @@ DB()
 
 const app = express()
 app.use(express.json())
+app.use(express.json({ limit: "10mb" }))
+
 app.use(cors())
 app.use(cors(
     {
-        origin: "*",
-
+        origin: "*", credentials: true
     }
 ))
 
@@ -30,21 +31,21 @@ app.use(cors(
 app.use(express.urlencoded({ extended: true }))
 app.use(usererrHandel)
 
-app.use('/images', express.static(path.join(__dirname, '/images')))
+// app.use('/images', express.static(path.join(__dirname, '/images')))
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'images')
-    }, filename: (req, file, cb) => {
-        cb(null, req.body.name)
-    }
-})
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, 'images')
+//     }, filename: (req, file, cb) => {
+//         cb(null, req.body.name)
+//     }
+// })
 
-const upload = multer({ storage: storage })
+// const upload = multer({ storage: storage })
 
-app.post('/upload', upload.single('file'), (req, res) => {
-    res.status(200).json("file uploades success")
-})
+// app.post('/upload', upload.single('file'), (req, res) => {
+//     res.status(200).json("file uploades success")
+// })
 
 app.use('/auth', authRoute)
 app.use('/user', userRoute)

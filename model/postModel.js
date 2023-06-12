@@ -10,7 +10,14 @@ const postSchema = new mongoose.Schema({
         required: true,
     },
     poto: {
-        type: String,
+        public_id: {
+            type: String,
+            required: true
+        },
+        url: {
+            type: String,
+            required: true
+        }
     },
     username: {
         type: String,

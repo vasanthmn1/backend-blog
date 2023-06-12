@@ -3,6 +3,7 @@ const asyncHandeler = require('express-async-handler')
 const bcrypt = require('bcrypt')
 const userModel = require('../model/userModel')
 const postModel = require('../model/postModel')
+const cloudinary = require('../utils/cloudinary')
 
 
 
@@ -57,9 +58,48 @@ const singlePost = asyncHandeler(async (req, res) => {
 })
 // ! Create Post
 
-const createPost = asyncHandeler(async (req, res) => {
+
+const uploadImageToCloudinary = async (imageURL) => {
     try {
-        const newPost = await postModel.create(req.body)
+
+
+
+
+        const newImage = await cloudinary.uploader.upload(imageURL, {
+            folder: 'blogWebsite',
+
+        });
+        return {
+            public_id: newImage.public_id,
+            url: newImage.secure_url
+        };
+    } catch (error) {
+        throw new Error('Failed to upload image to Cloudinary.');
+    }
+};
+
+const createPosts = async (title, poto, desc, username) => {
+    try {
+        const image = await uploadImageToCloudinary(poto.url);
+
+        const newPost = await postModel.create({
+            poto: image,
+            title,
+            desc,
+            username
+        });
+        return newPost;
+    } catch (error) {
+        throw new Error('Failed to create post.');
+    }
+};
+
+
+
+const createPost = asyncHandeler(async (req, res) => {
+    const { title, poto, desc, username } = req.body;
+    try {
+        const newPost = await createPosts(title, poto, desc, username)
 
         res.status(200).json(newPost)
     } catch (error) {
@@ -67,6 +107,8 @@ const createPost = asyncHandeler(async (req, res) => {
         throw new Error(error)
     }
 })
+
+
 // ! edit  Create Post
 
 const editPost = asyncHandeler(async (req, res) => {
