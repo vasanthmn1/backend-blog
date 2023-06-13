@@ -50,7 +50,6 @@ const registerUser = asyncHandeler(async (req, res) => {
 const loginUser = asyncHandeler(async (req, res) => {
     const { email, password } = req.body
 
-    console.log(email);
 
     const user = await userModel.findOne({ email })
 
