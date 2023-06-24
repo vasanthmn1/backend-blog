@@ -67,6 +67,9 @@ const uploadImageToCloudinary = async (imageURL) => {
 
         const newImage = await cloudinary.uploader.upload(imageURL, {
             folder: 'blogWebsite',
+            transformation: [
+                { quality: 50 }
+            ]
 
         });
         return {
